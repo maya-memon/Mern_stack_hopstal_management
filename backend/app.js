@@ -15,11 +15,7 @@ const app = express();
 config({ path: "./config/config.env" });
 
 app.use(cors({
-<<<<<<< HEAD
-  origin: ["https://hospital-user-frontend.netlify.app", process.env.DASHBOARD_URL],
-=======
-  origin: ["https://hospital-user-frontend.netlify.app/", process.env.DASHBOARD_URL],
->>>>>>> b31c32c54cc95662d680cb78c361ad791e23fcbb
+  origin: ["https://hospital-user-frontend.netlify.app", "https://admin-doctor.netlify.app/login"],
   methods: ["GET", "POST", "DELETE", "PUT"],
   credentials: true,
 }));

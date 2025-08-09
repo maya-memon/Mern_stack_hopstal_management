@@ -12,7 +12,7 @@ const Navbar = () => {
 
  const handleLogout = async () => {
   try {
-    const res = await axios.get("https://hospital-managemet-system.vercel.app/api/v1/user/patient/logout", {
+    const res = await axios.get("https://hospital-managemet-system-gznj.vercel.app/api/v1/user/patient/logout", {
       withCredentials: true,
     });
     toast.success(res.data?.message || "Logged out successfully!");
