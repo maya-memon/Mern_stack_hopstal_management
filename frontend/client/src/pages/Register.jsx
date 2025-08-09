@@ -18,40 +18,51 @@ const Register = () => {
 
   const navigateTo = useNavigate();
 
-  const handleRegistration = async (e) => {
-    e.preventDefault();
-    try {
-      await axios
-        .post(
-          "http://localhost:4000/api/v1/user/patient/register",
-          { firstName, lastName, email, phone, nic, dob, gender, password },
-          {
-            withCredentials: true,
-            headers: { "Content-Type": "application/json" },
-          }
-        )
-        .then((res) => {
-          toast.success(res.data.message);
-          setIsAuthenticated(true);
-          navigateTo("/");
-          setFirstName("");
-          setLastName("");
-          setEmail("");
-          setPhone("");
-          setNic("");
-          setDob("");
-          setGender("");
-          setPassword("");
-        });
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
+ const handleRegistration = async (e) => {
+  e.preventDefault();
+
+  const formData = {
+    firstName,
+    lastName,
+    email,
+    phone,
+    nic,
+    dob,
+    gender,
+    password,
   };
 
-  if (isAuthenticated) {
-    return <Navigate to={"/"} />;
-  }
+  try {
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/user/patient/register`,
+      formData,
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
 
+    toast.success(res.data.message);
+    setIsAuthenticated(true);
+    navigateTo("/");
+    // Reset all fields
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPhone("");
+    setNic("");
+    setDob("");
+    setGender("");
+    setPassword("");
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.message || "Registration failed. Please try again."
+    );
+  }
+};
+
+
+ 
   return (
     <>
       <div className="container form-component register-form">

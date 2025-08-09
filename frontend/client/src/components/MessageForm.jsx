@@ -11,27 +11,27 @@ const MessageForm = () => {
 
   const handleMessage = async (e) => {
     e.preventDefault();
-    try {
-      await axios
-        .post(
-          "http://localhost:4000/api/v1/message/send",
-          { firstName, lastName, email, phone, message },
-          {
-            withCredentials: true,
-            headers: { "Content-Type": "application/json" },
-          }
-        )
-        .then((res) => {
-          toast.success(res.data.message);
-          setFirstName("");
-          setLastName("");
-          setEmail("");
-          setPhone("");
-          setMessage("");
-        });
-    } catch (error) {
-      toast.error(error.response.data.message);
+   try {
+  const res = await axios.post(
+    `${import.meta.env.VITE_API_BASE_URL}/message/send`,
+    { firstName, lastName, email, phone, message },
+    {
+      withCredentials: true,
+      headers: { "Content-Type": "application/json" },
     }
+  );
+  toast.success(res.data.message);
+  setFirstName("");
+  setLastName("");
+  setEmail("");
+  setPhone("");
+  setMessage("");
+} catch (error) {
+  const message =
+    error.response?.data?.message || error.message || "Something went wrong";
+  toast.error(message);
+}
+
   };
 
   return (

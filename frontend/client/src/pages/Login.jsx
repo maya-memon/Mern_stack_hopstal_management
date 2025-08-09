@@ -15,9 +15,9 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-     console.log("Login button clicked");
+    console.log("Login button clicked");
 
-    // ✅ Optional front-end validation
+    // ✅ Frontend validation
     if (!email || !password || !confirmPassword) {
       toast.error("Please fill all fields.");
       return;
@@ -30,8 +30,8 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/v1/user/login",
-        { email, password, confirmPassword, role: "Patient" },
+        `${import.meta.env.VITE_API_BASE_URL}/user/login`,
+        { email, password, role: "Patient" }, // ✅ Removed confirmPassword from request body
         {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
@@ -40,10 +40,12 @@ const Login = () => {
 
       toast.success(res.data.message);
       setIsAuthenticated(true);
+      navigateTo("/");
+
+      // ✅ Reset form
       setEmail("");
       setPassword("");
       setConfirmPassword("");
-      navigateTo("/");
     } catch (error) {
       const msg =
         error?.response?.data?.message || "Login failed. Please try again.";
