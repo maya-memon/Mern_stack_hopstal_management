@@ -15,7 +15,7 @@ config({ path: "./config/config.env" });
 app.use(cors({
   origin: [
     "https://hospital-user-frontend.netlify.app",
-    "https://admin-doctor.netlify.app/login"
+    "https://admin-doctor.netlify.app"
   ],
   methods: ["GET", "POST", "DELETE", "PUT"],
   credentials: true,
